@@ -2,14 +2,14 @@ package priority_queue
 
 type Value interface {
 }
-type LessFunc func(i, j Value) bool
+type lessFunc func(i, j Value) bool
 type Heap struct {
 	arr     []Value
-	compare LessFunc
+	compare lessFunc
 	n       int
 }
 
-func NewHeap(less LessFunc) *Heap {
+func NewHeap(less func(i, j Value) bool) *Heap {
 	return &Heap{
 		arr:     []Value{},
 		compare: less,
