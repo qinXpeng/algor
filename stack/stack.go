@@ -3,32 +3,25 @@ package stack
 type Value interface {
 }
 
-type Stack struct {
-	n   int
-	arr []Value
-}
+type Stack []Value
 
-func NewSatck() *Stack {
-	return &Stack{
-		arr: []Value{},
-		n:   0,
-	}
+func NewStack() *Stack {
+	return &Stack{}
 }
 
 func (s *Stack) Len() int {
-	return s.n
+	a := *s
+	return len(a)
 }
-func (s *Stack) addSize(x int) {
-	s.n += x
+
+func (s *Stack) Top() Value {
+	a := *s
+	return a[s.Len()-1]
 }
 func (s *Stack) Push(val Value) {
-	s.arr = append(s.arr, val)
-	s.addSize(1)
-}
-func (s *Stack) Top() Value {
-	return s.arr[s.n-1]
+	*s = append(*s, val)
 }
 func (s *Stack) Pop() {
-	s.addSize(-1)
-	s.arr = s.arr[:s.n-1]
+	a := *s
+	*s = a[:s.Len()-1]
 }

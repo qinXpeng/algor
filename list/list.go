@@ -1,9 +1,11 @@
 package list
 
+type Value interface {
+}
 type ListNode struct {
 	prev *ListNode
 	next *ListNode
-	Val  interface{}
+	Val  Value
 }
 
 type Link struct {
@@ -29,12 +31,12 @@ func NewNode() *ListNode {
 func (list *Link) addSize(x int) {
 	list.n += x
 }
-func (list *Link) Push_back(val interface{}) {
+func (list *Link) Push_back(val Value) {
 	rt := NewNode()
 	rt.Val = val
 	list.push_back(rt)
 }
-func (list *Link) Push_front(val interface{}) {
+func (list *Link) Push_front(val Value) {
 	rt := NewNode()
 	rt.Val = val
 	list.push_front(rt)
@@ -75,10 +77,10 @@ func (list *Link) push_front(rt *ListNode) {
 	list.linkNode(list.root, rt)
 	list.addSize(1)
 }
-func (list *Link) Front_value() interface{} {
+func (list *Link) Front_value() Value {
 	return list.root.next.Val
 }
-func (list *Link) Back_value() interface{} {
+func (list *Link) Back_value() Value {
 	return list.root.prev.Val
 }
 func (list *Link) Front_pointer() *ListNode {
