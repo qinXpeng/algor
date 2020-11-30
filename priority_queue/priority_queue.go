@@ -1,4 +1,4 @@
-package hep
+package priority_queue
 
 type Value interface {
 }
