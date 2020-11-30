@@ -31,15 +31,19 @@ func NewNode() *ListNode {
 func (list *Link) addSize(x int) {
 	list.n += x
 }
-func (list *Link) Push_back(val Value) {
-	rt := NewNode()
-	rt.Val = val
-	list.push_back(rt)
+func (list *Link) Push_back(val ...Value) {
+	for _, v := range val {
+		rt := NewNode()
+		rt.Val = v
+		list.push_back(rt)
+	}
 }
-func (list *Link) Push_front(val Value) {
-	rt := NewNode()
-	rt.Val = val
-	list.push_front(rt)
+func (list *Link) Push_front(val ...Value) {
+	for _, v := range val {
+		rt := NewNode()
+		rt.Val = v
+		list.push_front(rt)
+	}
 }
 
 // link lhs->rhs
