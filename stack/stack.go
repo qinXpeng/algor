@@ -19,9 +19,7 @@ func (s *Stack) Top() Value {
 	return a[s.Len()-1]
 }
 func (s *Stack) Push(val ...Value) {
-	for _, v := range val {
-		*s = append(*s, v)
-	}
+	*s=append(*s,val...)
 }
 func (s *Stack) Pop() {
 	a := *s
