@@ -1,3 +1,3 @@
-module github.com/qinXpeng/go-Algorithm/algorithm
+module github.com/qinXpeng/go-Algorithm
 
 go 1.15
