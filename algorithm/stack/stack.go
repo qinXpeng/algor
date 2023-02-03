@@ -1,9 +1,7 @@
 package stack
 
-type Value interface {
-}
 
-type Stack []Value
+type Stack []any
 
 func NewStack() *Stack {
 	return &Stack{}
@@ -14,11 +12,11 @@ func (s *Stack) Len() int {
 	return len(a)
 }
 
-func (s *Stack) Top() Value {
+func (s *Stack) Top() any {
 	a := *s
 	return a[s.Len()-1]
 }
-func (s *Stack) Push(val ...Value) {
+func (s *Stack) Push(val ...any) {
 	*s=append(*s,val...)
 }
 func (s *Stack) Pop() {

@@ -1,42 +1,39 @@
 package priority_queue
 
-type Value interface {
-}
-type lessFunc func(i, j Value) bool
-type Heap struct {
-	arr     []Value
-	compare lessFunc
+type Heap[T comparable] struct {
+	arr     []T
+	compare func(i, j T) bool
 	n       int
 }
 
-func NewHeap(less func(i, j Value) bool) *Heap {
-	return &Heap{
-		arr:     []Value{},
+func NewHeap[T comparable](less func(i, j T) bool) *Heap[T] {
+	return &Heap[T]{
+		arr:     []T{},
 		compare: less,
 		n:       0,
 	}
 }
-func (p Heap) Less(i, j int) bool {
+func (p Heap[T]) Less(i, j int) bool {
 	return p.compare(p.arr[i], p.arr[j])
 }
-func (p Heap) Swap(i, j int) {
+func (p Heap[T]) Swap(i, j int) {
 	p.arr[i], p.arr[j] = p.arr[j], p.arr[i]
 }
-func (p Heap) Len() int {
+func (p Heap[T]) Len() int {
 	return p.n
 }
-func (p *Heap) addSize(x int) {
+func (p *Heap[T]) addSize(x int) {
 	p.n += x
 }
 
-func (p *Heap) Init() {
+func (p *Heap[T]) Init() {
 	n := p.Len()
 	for i := n/2 - 1; i >= 0; i-- {
 		p.down(i, n)
 	}
 }
 
-func (p *Heap) Push(x ...Value) {
+func (p *Heap[T]) Push(x ...T) {
 	for _, v := range x {
 		p.arr = append(p.arr, v)
 		p.addSize(1)
@@ -44,17 +41,17 @@ func (p *Heap) Push(x ...Value) {
 	}
 }
 
-func (p *Heap) Top() Value {
+func (p *Heap[T]) Top() T {
 	return p.arr[0]
 }
 
-func (p *Heap) Pop() {
+func (p *Heap[T]) Pop() {
 	p.addSize(-1)
 	p.Swap(0, p.n)
 	p.down(0, p.n)
 }
 
-func (p *Heap) Remove(i int) {
+func (p *Heap[T]) Remove(i int) {
 	n := p.Len() - 1
 	if n != i {
 		p.Swap(i, n)
@@ -64,13 +61,13 @@ func (p *Heap) Remove(i int) {
 	}
 }
 
-func (p *Heap) Fix(i int) {
+func (p *Heap[T]) Fix(i int) {
 	if !p.down(i, p.Len()) {
 		p.up(i)
 	}
 }
 
-func (p *Heap) up(j int) {
+func (p *Heap[T]) up(j int) {
 	for {
 		i := (j - 1) / 2
 		if i == j || !p.Less(j, i) {
@@ -81,7 +78,7 @@ func (p *Heap) up(j int) {
 	}
 }
 
-func (p *Heap) down(i0, n int) bool {
+func (p *Heap[T]) down(i0, n int) bool {
 	i := i0
 	for {
 		j1 := 2*i + 1

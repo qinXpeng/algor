@@ -1,26 +1,26 @@
-package list
+package qlist
 
 
 type ListNode[T comparable] struct {
-	prev *ListNode[T]
-	next *ListNode[T]
+	Prev *ListNode[T]
+	Next *ListNode[T]
 	Val  T
 }
 
 type Link[T comparable] struct {
-	root *ListNode[T]
+	Root *ListNode[T]
 	n    int
 }
 
-func (list *Link[T]) Len() int {
+func (list *Link[T] ) Len() int {
 	return list.n
 }
 func NewList[T comparable]() *Link[T] {
 	var rt = NewNode[T]()
-	rt.next = rt
-	rt.prev = rt
+	rt.Next = rt
+	rt.Prev = rt
 	return &Link[T]{
-		root: rt,
+		Root: rt,
 		n:    0,
 	}
 }
@@ -47,8 +47,8 @@ func (list *Link[T]) Push_front(val ...T) {
 
 // link lhs->rhs
 func (list *Link[T]) linkNode(lhs, rhs *ListNode[T]) {
-	lhs.next = rhs
-	rhs.prev = lhs
+	lhs.Next = rhs
+	rhs.Prev = lhs
 }
 
 // insert node before rt
@@ -56,7 +56,7 @@ func (list *Link[T]) InsertBefore(rt, node *ListNode[T]) {
 	if rt == list.Front_pointer() {
 		list.push_front(node)
 	} else {
-		list.linkNode(rt.prev, node)
+		list.linkNode(rt.Prev, node)
 		list.linkNode(node, rt)
 	}
 }
@@ -66,47 +66,51 @@ func (list *Link[T]) InsertAfter(rt, node *ListNode[T]) {
 	if rt == list.Back_pointer() {
 		list.push_back(node)
 	} else {
-		list.linkNode(node, rt.next)
+		list.linkNode(node, rt.Next)
 		list.linkNode(rt, node)
 	}
 }
 func (list *Link[T]) push_back(rt *ListNode[T]) {
 	list.linkNode(list.Back_pointer(), rt)
-	list.linkNode(rt, list.root)
+	list.linkNode(rt, list.Root)
 	list.addSize(1)
 }
 func (list *Link[T]) push_front(rt *ListNode[T]) {
 	list.linkNode(rt, list.Front_pointer())
-	list.linkNode(list.root, rt)
+	list.linkNode(list.Root, rt)
 	list.addSize(1)
 }
 func (list *Link[T]) Front_value() T {
-	return list.root.next.Val
+	return list.Root.Next.Val
 }
 func (list *Link[T]) Back_value() T {
-	return list.root.prev.Val
+	return list.Root.Prev.Val
 }
 func (list *Link[T]) Front_pointer() *ListNode[T] {
-	return list.root.next
+	return list.Root.Next
 }
 
 func (list *Link[T]) Back_pointer() *ListNode[T] {
-	return list.root.prev
+	return list.Root.Prev
 }
 func (list *Link[T]) remove(rt *ListNode[T]) {
-	list.linkNode(rt.prev, rt.next)
+	list.linkNode(rt.Prev, rt.Next)
 	list.addSize(-1)
-	rt.next = nil
-	rt.prev = nil
+	rt.Next = nil
+	rt.Prev = nil
 }
 func (list *Link[T]) Erase(rt *ListNode[T]) {
 	list.remove(rt)
 }
 func (list *Link[T]) Pop_back() {
-	list.remove(list.root.prev)
+	if list != nil{
+		list.remove(list.Root.Prev)
+	}
 }
 func (list *Link[T]) Pop_front() {
-	list.remove(list.root.next)
+	if list !=nil{
+		list.remove(list.Root.Next)
+	}
 }
 func (list *Link[T]) MoveToFront(rt *ListNode[T]) {
 	list.remove(rt)
@@ -120,11 +124,11 @@ func (list *Link[T]) Next(rt *ListNode[T]) *ListNode[T] {
 	if rt == list.Back_pointer() {
 		return nil
 	}
-	return rt.next
+	return rt.Next
 }
 func (list *Link[T]) Prev(rt *ListNode[T]) *ListNode[T] {
 	if rt == list.Front_pointer() {
 		return nil
 	}
-	return rt.prev
+	return rt.Prev
 }
