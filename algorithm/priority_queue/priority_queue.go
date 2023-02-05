@@ -1,29 +1,24 @@
 package priority_queue
 
 type Heap[T comparable] struct {
-	arr     []T
+	queue   []T
 	compare func(i, j T) bool
-	n       int
 }
 
 func NewHeap[T comparable](less func(i, j T) bool) *Heap[T] {
 	return &Heap[T]{
-		arr:     []T{},
+		queue:   []T{},
 		compare: less,
-		n:       0,
 	}
 }
 func (p Heap[T]) Less(i, j int) bool {
-	return p.compare(p.arr[i], p.arr[j])
+	return p.compare(p.queue[i], p.queue[j])
 }
 func (p Heap[T]) Swap(i, j int) {
-	p.arr[i], p.arr[j] = p.arr[j], p.arr[i]
+	p.queue[i], p.queue[j] = p.queue[j], p.queue[i]
 }
 func (p Heap[T]) Len() int {
-	return p.n
-}
-func (p *Heap[T]) addSize(x int) {
-	p.n += x
+	return len(p.queue)
 }
 
 func (p *Heap[T]) Init() {
@@ -35,20 +30,20 @@ func (p *Heap[T]) Init() {
 
 func (p *Heap[T]) Push(x ...T) {
 	for _, v := range x {
-		p.arr = append(p.arr, v)
-		p.addSize(1)
+		p.queue = append(p.queue, v)
 		p.up(p.Len() - 1)
 	}
 }
 
 func (p *Heap[T]) Top() T {
-	return p.arr[0]
+	return p.queue[0]
 }
 
 func (p *Heap[T]) Pop() {
-	p.addSize(-1)
-	p.Swap(0, p.n)
-	p.down(0, p.n)
+	n := p.Len()
+	p.Swap(0, n-1)
+	p.down(0, n-1)
+	p.queue = p.queue[:n-1]
 }
 
 func (p *Heap[T]) Remove(i int) {
