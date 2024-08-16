@@ -1,4 +1,4 @@
-package priority_queue
+package algor
 
 type Heap[T comparable] struct {
 	queue   []T
@@ -19,6 +19,10 @@ func (p Heap[T]) Swap(i, j int) {
 }
 func (p Heap[T]) Len() int {
 	return len(p.queue)
+}
+
+func (p Heap[T]) Empty() bool {
+	return p.Len() == 0
 }
 
 func (p *Heap[T]) Init() {

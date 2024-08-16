@@ -1,3 +1,3 @@
-module github.com/qinXpeng/go-Algorithm
+module github.com/qinXpeng/algor
 
-go 1.18
+go 1.22
